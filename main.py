@@ -1,24 +1,12 @@
 import sys
 
-def strip_line(line):
-    line = line.strip(' \r\n')
-    if len(line) > 0:
-        comment = line.rfind('//')
-        if comment >= 0:
-            line = line[:comment].strip(' \r\n')
-    return line
+from vmt import parser, emitter
+
 
 def main(argv):
-    with open(argv[1]) as f:
-        for line in f:
-            s = strip_line(line)
-            if len(s) > 0:
-                print(s)
+    parser.load_file(argv[1])
+    emitter.write_file(argv[1], parser.get_commands())
 
-    idx = argv[1].find('.vm')
-    if idx >= 0:
-        asm_file = argv[1][:idx] + ".asm"
-        print("\noutput file: " + asm_file)
 
 if __name__ == "__main__":
     main(sys.argv)

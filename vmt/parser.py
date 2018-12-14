@@ -21,8 +21,9 @@ def strip_line(line):
     return line
 
 
-def parse_command(line):
-    command = { "text" : line}
+def parse_command(line, assembly_name):
+    command = { "text" : line }
+    command = { "assembly" : assembly_name }    
     tokens = line.split(" ")
     if len(tokens) >= 1:
         if tokens[0] == "push" and len(tokens) == 3:
@@ -44,11 +45,13 @@ def parse_command(line):
 
 
 def load_file(filename):
+    idx = filename.find('.vm')
+    assembly_name = filename[:idx]        
     with open(filename) as f:
         for line in f:
             s = strip_line(line)
             if len(s) > 0:
-                commands.append(parse_command(s))
+                commands.append(parse_command(s, assembly_name))
 
 
 def get_commands():

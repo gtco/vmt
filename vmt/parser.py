@@ -35,6 +35,7 @@ def parse_command(line):
             command["arg2"] = tokens[2]
         elif tokens[0] in arithmetic_keywords:           
             command["command_type"] = Command.ARITHMETIC
+            command["arg1"] = tokens[0]
         else:
             pass
     else:
